@@ -1,11 +1,15 @@
 import express from "express";
 import cors from "cors";
-import { authRouter } from "./modules/users/user.route.js";
+import cookieParser from "cookie-parser";
+import { authRouter } from "./modules/users/user.route";
+import authRoute from "./modules/auth/auth.route";
 const app = express();
 
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors());
 
 app.use("/api/v1/users", authRouter);
+app.use("/api/v1/auth", authRoute);
 
 export default app;

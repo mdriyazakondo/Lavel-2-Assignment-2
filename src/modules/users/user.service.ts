@@ -1,5 +1,5 @@
-import { pool } from "../../db/index.js";
-import type { IUser } from "./user.interface.js";
+import { pool } from "../../db/index";
+import type { IUser } from "./user.interface";
 import bcrypt from "bcryptjs";
 
 const createUserService = async (payload: IUser) => {
