@@ -6,7 +6,7 @@ import { config } from "../../config";
 const loginService = async (payload: { email: string; password: string }) => {
   const { email, password } = payload;
   const result = await pool.query(
-    `SELECT id, name, email, password, age, created_at, updated_at
+    `SELECT id, name, email, password, age,role, created_at, updated_at
      FROM users
      WHERE email = $1`,
     [email],
@@ -35,11 +35,35 @@ const loginService = async (payload: { email: string; password: string }) => {
     expiresIn: "1d",
   });
 
+  const refreshToken = jwt.sign(jwtPayload, config.REFRESH_TOKEN_SECRET, {
+    expiresIn: "7d",
+  });
+
   delete userData.password;
 
-  return { ...userData, accessToken };
+  return { ...userData, accessToken, refreshToken };
+};
+
+const refreshTokenService = async (refreshToken: string) => {
+  try {
+    const decoded = jwt.verify(
+      refreshToken,
+      config.REFRESH_TOKEN_SECRET,
+    ) as JwtPayload;
+    const { id, name, email, role } = decoded;
+
+    const jwtPayload = { id, name, email, role };
+    const accessToken = jwt.sign(jwtPayload, config.ACCESS_TOKEN_SECRET, {
+      expiresIn: "1d",
+    });
+
+    return { accessToken };
+  } catch (error) {
+    throw new Error("Invalid Refresh Token");
+  }
 };
 
 export const authService = {
   loginService,
+  refreshTokenService,
 };
