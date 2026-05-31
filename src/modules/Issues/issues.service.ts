@@ -10,6 +10,13 @@ const createIssueTableQuery = async (payload: TIssue) => {
   return result.rows[0];
 };
 
+const getAllIssuesQuery = async () => {
+  const result = await pool.query(
+    `SELECT * FROM issues ORDER BY created_at DESC`,
+  );
+  return result.rows;
+};
+
 const singleIssueQuery = async (id: string) => {
   const result = await pool.query(`SELECT * FROM issues WHERE id = $1`, [id]);
   return result.rows[0];
@@ -37,4 +44,5 @@ export const issueService = {
   singleIssueQuery,
   updateIssueQuery,
   deleteIssueQuery,
+  getAllIssuesQuery,
 };

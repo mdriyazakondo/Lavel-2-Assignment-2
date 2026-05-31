@@ -18,6 +18,23 @@ const createIssueController = async (req: Request, res: Response) => {
   }
 };
 
+const getAllIssuesController = async (req: Request, res: Response) => {
+  try {
+    const result = await issueService.getAllIssuesQuery();
+    res.status(200).json({
+      message: "Issues retrieved successfully",
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal Server Error",
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
+  }
+};
+
 const singleIssueController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -74,7 +91,8 @@ const deleteIssueController = async (req: Request, res: Response) => {
 
 export const issueController = {
   createIssueController,
+  getAllIssuesController,
   singleIssueController,
   updateIssueController,
-  deleteIssueController
+  deleteIssueController,
 };

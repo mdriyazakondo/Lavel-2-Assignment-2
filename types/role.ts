@@ -1,3 +1,3 @@
 export interface UserRole {
-  role: "admin" | "user" | "contributor";
+  role: "maintainer" | "contributor";
 }

@@ -20,7 +20,9 @@ const createUserService = async (payload: IUser) => {
 
 const getAllUserService = async () => {
   const result = await pool.query(
-    `SELECT id,name,email,age,role,created_at,updated_at FROM users`,
+    `SELECT id,name,email,age,role,created_at,updated_at FROM users
+    ORDER BY created_at DESC
+    `,
   );
   return result;
 };

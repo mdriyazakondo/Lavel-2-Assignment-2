@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { config } from "../config";
 import { pool } from "../db";
 
-type UserRole = "admin" | "user" | "contributor";
+type UserRole = "maintainer" | "contributor";
 
 const auth = (...roles: UserRole[]) => {
   return async (req: Request, res: Response, next: NextFunction) => {
@@ -35,7 +35,6 @@ const auth = (...roles: UserRole[]) => {
 
       (req as any).decoded = decoded;
 
-      console.log(userData);
       next();
     } catch (error) {
       return res.status(401).json({
