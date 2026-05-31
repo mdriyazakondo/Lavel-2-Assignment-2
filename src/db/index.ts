@@ -14,11 +14,24 @@ const initDB = async () => {
         password VARCHAR(255) NOT NULL,
         is_active BOOLEAN DEFAULT TRUE,
         age INTEGER,
-        role VARCHAR(50) DEFAULT 'contributor',
+      role VARCHAR(255) NOT NULL DEFAULT 'contributor' CHECK (role IN ('contributor', 'maintainer')),
 
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`);
+
+    await pool.query(`
+    CREATE TABLE IF NOT EXISTS issues (
+      id SERIAL PRIMARY KEY,
+      title VARCHAR(255) NOT NULL,
+      description TEXT NOT NULL,
+      type VARCHAR(255) NOT NULL CHECK (type IN ('bug', 'feature_request')),
+      status VARCHAR(255) DEFAULT 'open' CHECK (status IN ('open', 'in_progress', 'resolved')),
+      reporter_id INT NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    )`);
+
     console.log("Database initialized successfully.");
   } catch (error) {
     console.error("Error initializing database:", error);
