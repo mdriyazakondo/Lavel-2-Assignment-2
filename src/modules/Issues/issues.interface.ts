@@ -1,8 +1,7 @@
-export interface TIssue {
-  id?: number;
-  title: string;
-  description: string;
-  type: "bug" | "feature_request";
+export type TIssue = {
+  title?: string;
+  description?: string;
+  issue_type?: "bug" | "feature_request";
   status?: "open" | "in_progress" | "resolved";
-  reporter_id: number;
-}
+  reporter_id?: number;
+};

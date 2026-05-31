@@ -3,7 +3,7 @@ import { issueService } from "./issues.service";
 
 const createIssueController = async (req: Request, res: Response) => {
   try {
-    const result = await issueService.createIssueTableQuery(req.body);
+    const result = await issueService.createIssue(req.body);
     res.status(201).json({
       message: "Issue created successfully",
       success: true,
@@ -20,7 +20,7 @@ const createIssueController = async (req: Request, res: Response) => {
 
 const getAllIssuesController = async (req: Request, res: Response) => {
   try {
-    const result = await issueService.getAllIssuesQuery();
+    const result = await issueService.getAllIssues();
     res.status(200).json({
       message: "Issues retrieved successfully",
       success: true,
@@ -38,7 +38,7 @@ const getAllIssuesController = async (req: Request, res: Response) => {
 const singleIssueController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const result = await issueService.singleIssueQuery(id as string);
+    const result = await issueService.getSingleIssue(id as string);
     res.status(200).json({
       message: "Issue retrieved successfully",
       success: true,
@@ -56,7 +56,7 @@ const singleIssueController = async (req: Request, res: Response) => {
 const updateIssueController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const result = await issueService.updateIssueQuery(id as string, req.body);
+    const result = await issueService.updateIssue(id as string, req.body);
     res.status(200).json({
       message: "Issue updated successfully",
       success: true,
@@ -74,7 +74,7 @@ const updateIssueController = async (req: Request, res: Response) => {
 const deleteIssueController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    const result = await issueService.deleteIssueQuery(id as string);
+    const result = await issueService.deleteIssue(id as string);
     res.status(200).json({
       message: "Issue deleted successfully",
       success: true,
