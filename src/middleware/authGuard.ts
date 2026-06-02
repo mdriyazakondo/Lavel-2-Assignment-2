@@ -11,12 +11,12 @@ export const authGuard = () => {
         throw new Error("You are not authorized!");
       }
 
-      // টোকেন ভেরিফাই করা হচ্ছে
       const decoded = jwt.verify(
         token,
         config.ACCESS_TOKEN_SECRET,
       ) as jwt.JwtPayload;
 
+      console.log("decoded", decoded);
       req.user = decoded;
 
       next();

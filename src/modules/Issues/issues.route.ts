@@ -3,18 +3,20 @@ import { issueController } from "./issues.controller";
 import auth from "../../middleware/auth";
 import { UserRole } from "../../utility";
 import maintainer from "../../middleware/maintainer";
+import { authGuard } from "../../middleware/authGuard";
 
 const router = express.Router();
 
 router.post(
   "/",
+  authGuard(),
   auth(UserRole.CONTRIBUTOR, UserRole.MAINTAINER),
   issueController.createIssueController,
 );
 
 router.get(
   "/",
-  maintainer(),
+
   auth(UserRole.CONTRIBUTOR),
   issueController.getAllIssuesController,
 );
