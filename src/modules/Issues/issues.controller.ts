@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import { issueService } from "./issues.service";
 
+//create issue controller
 const createIssueController = async (req: Request, res: Response) => {
   try {
     const result = await issueService.createIssue(req.body);
@@ -18,6 +19,7 @@ const createIssueController = async (req: Request, res: Response) => {
   }
 };
 
+//get all issues controller
 const getAllIssuesController = async (req: Request, res: Response) => {
   try {
     const result = await issueService.getAllIssues();
@@ -35,6 +37,7 @@ const getAllIssuesController = async (req: Request, res: Response) => {
   }
 };
 
+// get single issue controller
 const singleIssueController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -53,6 +56,7 @@ const singleIssueController = async (req: Request, res: Response) => {
   }
 };
 
+// update issue controller
 const updateIssueController = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
@@ -70,6 +74,8 @@ const updateIssueController = async (req: Request, res: Response) => {
     });
   }
 };
+
+// delete issue controller
 
 const deleteIssueController = async (req: Request, res: Response) => {
   try {
